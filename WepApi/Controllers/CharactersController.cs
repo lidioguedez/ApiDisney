@@ -16,14 +16,13 @@ namespace WepApi.Controllers
         private readonly IGenericRepository<Personaje> _PersonGenericRepository;
         private readonly IMapper _mapper;
         private readonly IPeliculaRepository _peliculaRepository;
-        private readonly IPersonajeRepository _personajeRepository;
 
-        public CharactersController(IMapper mapper, IGenericRepository<Personaje> PersonGenericRepository, IPeliculaRepository peliculaRepository, IPersonajeRepository personajeRepository)
+        public CharactersController(IMapper mapper, IGenericRepository<Personaje> PersonGenericRepository, IPeliculaRepository peliculaRepository)
         {
             _PersonGenericRepository = PersonGenericRepository;
             _mapper = mapper;
             _peliculaRepository = peliculaRepository;
-            _personajeRepository = personajeRepository;
+
         }
 
         [HttpGet]

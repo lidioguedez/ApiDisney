@@ -4,15 +4,33 @@ using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using AutoMapper;
+using Core.Entities;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//builder.Services.AddIdentityCore<Usuario>();
+// For Identity
+builder.Services.AddIdentity<Usuario, IdentityRole>()
+    .AddEntityFrameworkStores<SeguridadDbContext>()
+    .AddRoles<IdentityRole>()
+    .AddSignInManager<SignInManager<Usuario>>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication();
+
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 builder.Services.AddDbContext<ApiDisneyDbContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddDbContext<SeguridadDbContext>(opt =>
+{
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("IdentitySeguridad"));
 });
 
 builder.Services.AddAutoMapper(typeof(PeliculaRepository));
@@ -36,6 +54,12 @@ using (var scope = app.Services.CreateScope())
     {
         var context = service.GetRequiredService<ApiDisneyDbContext>();
         context.Database.Migrate();
+
+        var userManager = service.GetRequiredService<UserManager<Usuario>>();
+        var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
+        var identityContext = service.GetRequiredService<SeguridadDbContext>();
+        await identityContext.Database.MigrateAsync();
+        await SeguridadDbContextData.SeedUserAsync(userManager, roleManager);
     }
     catch (Exception e)
     {
