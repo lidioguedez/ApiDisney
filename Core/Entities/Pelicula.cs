@@ -15,7 +15,7 @@ namespace Core.Entities
         public string? Imagen { get; set; }
         [MaxLength(4)]
         public string? FechaCreacion { get; set; }
-        public int? Calificacion { get; set; }
+        public double? Calificacion { get; set; }
         public int GeneroId { get; set; }
 
         [ForeignKey("GeneroId")]
