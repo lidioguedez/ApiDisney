@@ -86,7 +86,6 @@ namespace BusinessLogic.Data.Migrations.identity
                         .HasColumnType("bit");
 
                     b.Property<string>("Imagen")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")

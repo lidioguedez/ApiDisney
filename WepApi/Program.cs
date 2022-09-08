@@ -6,12 +6,16 @@ using System.Text.Json.Serialization;
 using AutoMapper;
 using Core.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<ITokenService, TokenService>();
 
-//builder.Services.AddIdentityCore<Usuario>();
 // For Identity
 builder.Services.AddIdentity<Usuario, IdentityRole>()
     .AddEntityFrameworkStores<SeguridadDbContext>()
@@ -19,7 +23,18 @@ builder.Services.AddIdentity<Usuario, IdentityRole>()
     .AddSignInManager<SignInManager<Usuario>>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:Key"])),
+        ValidIssuer = builder.Configuration["Token:Issuer"],
+        ValidateIssuer = true,
+        ValidateAudience = false
+    };
+
+});
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
@@ -69,7 +84,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
