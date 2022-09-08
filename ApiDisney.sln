@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WepApi", "WepApi\WepApi.csproj", "{D67644DD-247E-4934-A38A-FF0E75C96750}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{D1B8644B-3BF2-4CA7-BA1D-F08E4657202E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{4E1B69AD-D4AB-4339-890F-381366D4C6A9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D67644DD-247E-4934-A38A-FF0E75C96750}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D67644DD-247E-4934-A38A-FF0E75C96750}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D67644DD-247E-4934-A38A-FF0E75C96750}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D67644DD-247E-4934-A38A-FF0E75C96750}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1B8644B-3BF2-4CA7-BA1D-F08E4657202E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1B8644B-3BF2-4CA7-BA1D-F08E4657202E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1B8644B-3BF2-4CA7-BA1D-F08E4657202E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1B8644B-3BF2-4CA7-BA1D-F08E4657202E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E1B69AD-D4AB-4339-890F-381366D4C6A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E1B69AD-D4AB-4339-890F-381366D4C6A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E1B69AD-D4AB-4339-890F-381366D4C6A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E1B69AD-D4AB-4339-890F-381366D4C6A9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC57E95D-4DE4-41FA-9668-BD37A84FD169}
+	EndGlobalSection
+EndGlobal
