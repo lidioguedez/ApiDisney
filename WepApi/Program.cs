@@ -30,7 +30,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:Key"])),
         ValidIssuer = builder.Configuration["Token:Issuer"],
+
         ValidateIssuer = true,
+        //Lo actiso no sedeseo que cualquier persona vea mis enpoint
         ValidateAudience = false
     };
 
@@ -51,6 +53,7 @@ builder.Services.AddDbContext<SeguridadDbContext>(opt =>
 builder.Services.AddAutoMapper(typeof(PeliculaRepository));
 builder.Services.AddTransient<IPeliculaRepository, PeliculaRepository>();
 builder.Services.AddTransient<IPersonajeRepository, PersonajeRepository>();
+builder.Services.AddSingleton<ISendGridEnviar, SendGridEnviar>();
 
 
 builder.Services.AddControllers().AddJsonOptions(x =>

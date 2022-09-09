@@ -57,12 +57,12 @@ namespace WepApi.Controllers
         [HttpPost]
         public async Task<ActionResult<PersonajeDto>> AddCharacter(PersonajeDataDto personaje)
         {
-            //var listPelis = await _peliculaRepository.GetListPeliIdsAsinc(personaje);
+            var listPelis = await _peliculaRepository.GetListPeliIdsAsinc(personaje);
 
-            //if (personaje.PeliculasId.Count != listPelis.Count)
-            //{
-            //    return BadRequest("No Existe Uno De Los Id de Peliculas Enviadas");
-            //}
+            if (personaje.PeliculasId.Count != listPelis.Count)
+            {
+                return BadRequest("No Existe Uno De Los Id de Peliculas Enviadas");
+            }
 
             var person = _mapper.Map<Personaje>(personaje);
             var resp = await _PersonGenericRepository.CreateAsinc(person);

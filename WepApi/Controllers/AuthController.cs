@@ -1,9 +1,13 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using SendGrid.Helpers.Errors.Model;
+using System.Text;
 using WebApi.Dtos;
 using WebApi.Errors;
 using WebApi.Extensions;
@@ -17,13 +21,14 @@ namespace WepApi.Controllers
         private readonly UserManager<Usuario> _userManager;
         private readonly SignInManager<Usuario> _signInManager;
         private readonly ITokenService _tokenService;
-
-
-        public AuthController(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, ITokenService tokenService)
+        private readonly ISendGridEnviar _sendGridEnviar;
+       
+        public AuthController(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, ITokenService tokenService, ISendGridEnviar sendGridEnviar, IConfiguration config)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _sendGridEnviar = sendGridEnviar;
         }
 
         [HttpPost("login")]
@@ -31,7 +36,7 @@ namespace WepApi.Controllers
         {
             var usuario = await _userManager.FindByEmailAsync(loginDto.Email);
 
-            if (User == null)
+            if (usuario == null)
             {
                 return Unauthorized(new CodeErrorResponse(401));
             }
@@ -40,7 +45,7 @@ namespace WepApi.Controllers
 
             if (!resultado.Succeeded)
             {
-                return Unauthorized(new CodeErrorResponse(401));
+                return Unauthorized(new CodeErrorResponse(401, "Nombre de Usuario o Contraseña incorrectas"));
             }
 
             var roles = await _userManager.GetRolesAsync(usuario);
@@ -61,6 +66,13 @@ namespace WepApi.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UsuarioDto>> Registrar(RegistrarDto registrarDto)
         {
+            var user = await _userManager.FindByEmailAsync(registrarDto.Email);
+
+
+            if (user != null)
+            {
+                return BadRequest("El Email ya esta registrado.");
+            }
 
             var usuario = new Usuario
             {
@@ -75,15 +87,32 @@ namespace WepApi.Controllers
 
             if (!resultado.Succeeded)
             {
-                return BadRequest(new CodeErrorResponse(400));
+                string err = "";
+
+                foreach (var e in resultado.Errors)
+                {
+                    err = err + e.Code + " ";
+                }
+
+                return BadRequest(new CodeErrorResponse(400, err));
             }
+
+            var dataEmail = new SendGridEnt();
+            var roles = await _userManager.GetRolesAsync(usuario);
+
+            dataEmail.EmailDestinatario = usuario.Email;
+            dataEmail.NombreDestinatario = usuario.Nombre + " " + usuario.Apellido;
+            dataEmail.Nombre = usuario.Nombre;
+            dataEmail.Token = _tokenService.CreateToken(usuario, roles);
+
+            _sendGridEnviar.EnviarEmail(dataEmail);
 
             return new UsuarioDto
             {
                 Id = usuario.Id,
                 Nombre = usuario.Nombre,
                 Apellido = usuario.Apellido,
-                Token = _tokenService.CreateToken(usuario, null),
+                Token = dataEmail.Token,
                 Email = usuario.Email,
                 Imagen = usuario.Imagen,
                 Username = usuario.UserName,
@@ -92,13 +121,14 @@ namespace WepApi.Controllers
 
         }
 
-        [Authorize]
+        
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<UsuarioDto>> GetUsuario()
         {
-            var usuario = await _userManager.BuscarUsuarioAsync(HttpContext.User);
 
-            var roles = await _userManager.GetRolesAsync(usuario);
+            var usuario = await _userManager.BuscarUsuarioAsync(HttpContext.User);
+            var roles = await _userManager.GetRolesAsync(usuario);           
 
             return new UsuarioDto
             {
@@ -112,15 +142,6 @@ namespace WepApi.Controllers
                 Admin = roles.Contains("ADMIN") ? true : false
             };
         }
-
-        [HttpGet("emailvalido")]
-        public async Task<ActionResult<bool>> ValidarEmail([FromQuery] string email)
-        {
-            var usuario = await _userManager.FindByEmailAsync(email);
-
-            if (usuario == null) return false;
-
-            return true;
-        }
+        
     }
 }

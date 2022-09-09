@@ -11,6 +11,6 @@ namespace Core.Entities
         public int GeneroId { get; set; }
         public string Nombre { get; set; }
         public string Imagen { get; set; }
-        public virtual ICollection<Pelicula>? Pelicula { get; set; } 
+        public virtual ICollection<Pelicula> Pelicula { get; set; } 
     }
 }
