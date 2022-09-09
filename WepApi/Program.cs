@@ -32,7 +32,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidIssuer = builder.Configuration["Token:Issuer"],
 
         ValidateIssuer = true,
-        //Lo actiso no sedeseo que cualquier persona vea mis enpoint
+        //Lo activo si no deseo que cualquiera vea acceda a mis endpoint
         ValidateAudience = false
     };
 
