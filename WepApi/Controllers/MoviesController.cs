@@ -8,6 +8,8 @@ using AutoMapper;
 using BusinessLogic.Data;
 using System.Linq.Expressions;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WepApi.Controllers
 {
@@ -29,6 +31,7 @@ namespace WepApi.Controllers
     }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<List<PeliculaDto>>> GetMovies(string? name,int? genre, string? order)
         {
             var spec = new PeliculaWithGeneroPersonajeSpecification(name, genre, order);
@@ -40,6 +43,7 @@ namespace WepApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<PeliculaDetalleDto>> GetMoviesDetalle(int id)
         {
             var spec = new PeliculaWithGeneroPersonajeSpecification(id);
@@ -51,6 +55,7 @@ namespace WepApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<PeliculaDetalleDto>> AddMovies(PeliculaDataDto pelicula)
         {
             var listPers = await _PersonRepository.GetListPersIdsAsinc(pelicula);
@@ -77,6 +82,7 @@ namespace WepApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> DeleteMovies(int id)
         {
             var peli = await _MovieRepository.GetByIdAsync(id);
@@ -92,6 +98,7 @@ namespace WepApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> EditarPelicula(int id, PeliculaDataDto peliculaDataDto)
         {
             var spec = new PeliculaWithGeneroPersonajeSpecification(id);

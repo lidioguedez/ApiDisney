@@ -4,6 +4,8 @@ using Core.DTO;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +28,7 @@ namespace WepApi.Controllers
         }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<List<PersonajeDto>>> GetPersonaje(string? name, int? age, int? movie)
         {
             var spec = new PersonajeWithPersonajePeliculaAndSpesification(name, age, movie);
@@ -43,6 +46,7 @@ namespace WepApi.Controllers
 
       
         [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<PersonajeDetalleDto>> GetPersonajeDetalle(int id)
         {
             var spec = new PersonajeWithPersonajePeliculaAndSpesification(id);
@@ -55,6 +59,7 @@ namespace WepApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<PersonajeDto>> AddCharacter(PersonajeDataDto personaje)
         {
             var listPelis = await _peliculaRepository.GetListPeliIdsAsinc(personaje);
@@ -82,6 +87,7 @@ namespace WepApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> DeleteCharacter(int id)
         {
             var person = await _PersonGenericRepository.GetByIdAsync(id);
@@ -97,6 +103,7 @@ namespace WepApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> EditarPersonaje(int id, PersonajeDataDto personajeDataDto)
         {
             var spec = new PersonajeWithPersonajePeliculaAndSpesification(id);
