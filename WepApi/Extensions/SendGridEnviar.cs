@@ -27,7 +27,7 @@ namespace BusinessLogic.Logic
                 var sendGridCliente = new SendGridClient(_config["SendGrid:ApiKey"]);
                 var destinatario = new EmailAddress(data.EmailDestinatario, data.NombreDestinatario);
                 var tituloEmail = "Bienvenid@ - Gracias por registrarse" ;
-                var sender = new EmailAddress("admin@lidioguedez.com", "Lidio Guedez");
+                var sender = new EmailAddress("admin@abdisoft.com", "Lidio Guedez");
                 var contenidoMensaje = $"Hola {data.Nombre},  <br /><br /><br />" +
                 $" Te damos la Bienvenida a nuestra Api Disney, a continuación te hacemos llegar el Token de conexion:<br /><br />" +
                 $"TOKEN: {data.Token} <br /><br />" +
