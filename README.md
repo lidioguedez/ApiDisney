@@ -5,7 +5,7 @@
 
 Para comenzar a usar esta Api se debe deben registrar en el Endpoint:
 ```php
- curl -X POST -H 'Authorization: Bearer $TOKEN' /api/auth/register
+ curl -X POST  /api/auth/register
 ```
 
 Se debe usar el método "Post" y se debe enviar el siguiente Json en la llamada a la Api:
