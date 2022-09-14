@@ -1,5 +1,5 @@
 # Simple Api Disney
-@#### Servidor de prueba: **http://149.56.175.197/api/**
+#### Servidor de prueba: **http://149.56.175.197/api/**
 
 ### Registrando Un Nuevo Usuario
 
