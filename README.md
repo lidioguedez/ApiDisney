@@ -359,7 +359,7 @@ Se puede filtrar por Genero de la Pelicula.
 
 Se puede ordenar por facha de Creación
 ```php
- curl -X GET -H 'Authorization: Bearer $TOKEN' /movies?order=ASC | DESC
+ curl -X GET -H 'Authorization: Bearer $TOKEN' /api/movies?order=ASC | DESC
 ```
 
 
