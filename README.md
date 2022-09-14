@@ -247,12 +247,121 @@ Por Id de **Pelicula:**
 ```
 
 ### Creación de nueva Pelicula
+Se debe hacer una solicitud al Endpoint  /movies
+
+```php
+ curl -X POST -H 'Authorization: Bearer $TOKEN' /api/movies
+```
+
+```Json
+{
+
+    "Titulo": "101 dálmatas",
+    "GeneroId": 1,
+    "Imagen": "htp://imagen.com",
+    "FechaCreacion": "1961",
+    "PersonajeID" : [
+       1
+    ]
+
+}
+```
+
+**Respuesta:**
+
+```Json
+{
+    "peliculaId": 5,
+    "titulo": "101 dálmatas",
+    "imagen": "htp://imagen.com",
+    "fechaCreacion": "1961",
+    "calificacion": 0,
+    "generoId": 1,
+    "generoNombre": "Animada",
+    "data": [
+        {
+            "personaje": {
+                "personajeId": 1,
+                "nombre": "Baronesa Von Hellman",
+                "imagen": "https://static.wikia.nocookie.net/disney/images/9/9a/Cruella_-_Photography_-_Baroness_2.jpg/revision/latest/scale-to-width-down/1000?cb=20210601151044&path-prefix=es"
+            }
+        }
+    ]
+}
+```
 
 ### Edicion de Pelicula
+Para editar una pelicula se debe hacer una solicitud de tipo PUT e indicar el ID de la pelicula.
+```php
+ curl -X PUT -H 'Authorization: Bearer $TOKEN' /api/movies/{id}
+```
+Estos son los campos minimos que se deben usar:
+```Json
+{
+    "Titulo": "110 dálmatas",
+    "GeneroId": 1,
+    "PersonajeId": [
+        1,4
+    ]
+
+}
+```
+
+**Respuesta:**
+
+```Json
+{
+    "peliculaId": 4,
+    "titulo": "110 dálmatas",
+    "imagen": null,
+    "fechaCreacion": null,
+    "calificacion": 0,
+    "generoId": 1,
+    "generoNombre": "Animada",
+    "data": [
+        {
+            "personaje": {
+                "personajeId": 1,
+                "nombre": "Baronesa Von Hellman",
+                "imagen": "https://static.wikia.nocookie.net/disney/images/9/9a/Cruella_-_Photography_-_Baroness_2.jpg/revision/latest/scale-to-width-down/1000?cb=20210601151044&path-prefix=es"
+            }
+        },
+        {
+            "personaje": {
+                "personajeId": 4,
+                "nombre": "Cruella de Vil",
+                "imagen": "https://static.wikia.nocookie.net/doblaje/images/b/bd/Cruella_De_Vil-0.png/revision/latest/scale-to-width-down/341?cb=20180716034935&path-prefix=es"
+            }
+        }
+    ]
+}
+```
 
 ### Eliminación de Pelicula
+La eliminacion de un registro se hae invocando el metodo Delete al enpoint /movie indicandole el id a eliminar.
+```php
+ curl -X DELETE -H 'Authorization: Bearer $TOKEN' /api/movies/{id}
+```
+
+Devolvera un string idicando si la pelicula fue borrada (**Pelicula Eliminada**) o sino un error.
 
 ### Ordenamientos y Busquedas
+
+Se puede buscar por titulo de la pelicula.
+```php
+ curl -X GET -H 'Authorization: Bearer $TOKEN' /api/movies?name=nombre
+```
+
+Se puede filtrar por Genero de la Pelicula.
+```php
+ curl -X GET -H 'Authorization: Bearer $TOKEN' /api/movies?genre=idGenero
+```
+
+Se puede ordenar por facha de Creación
+```php
+ curl -X GET -H 'Authorization: Bearer $TOKEN' /movies?order=ASC | DESC
+```
+
 
 
 
