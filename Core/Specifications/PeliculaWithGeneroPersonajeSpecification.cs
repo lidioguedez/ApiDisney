@@ -23,10 +23,10 @@ namespace Core.Specifications
                 switch (order.ToUpper())
                 {
                     case "ASC":
-                        AddOrderBy(p => p.Titulo);
+                        AddOrderBy(p => p.FechaCreacion);
                         break;
                     case "DESC":
-                        AddOrderByDesc(p => p.Titulo);
+                        AddOrderByDesc(p => p.FechaCreacion);
                         break;
                     default:
                         AddOrderBy(p => p.PeliculaId);
