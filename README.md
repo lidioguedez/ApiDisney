@@ -144,7 +144,7 @@ Se debe incluir los siguientes datos minimos:
     ]
 }
 ```
-**NOTA:** En **"PeliculasId"** se agregan o retiran los Ids de cada pelicula donde el personaje participa. Pe pueden agregar o quitar
+**NOTA:** En **"PeliculasId"** se agregan o retiran los Ids de cada pelicula donde el personaje participa. Se pueden agregar o quitar
 
 **Respuesta:**
 ```Json
@@ -175,7 +175,7 @@ Se puede eliminar un personaje haciendo una peticion al siguiente endpoint:
 ```php
  curl -X DELETE -H 'Authorization: Bearer $TOKEN' /api/Characters/{id}
 ```
-Devolvera un strin indicando que fue eliminado: **"Personaje Eliminado"**
+Devolvera un string indicando que fue eliminado: **"Personaje Eliminado"**
 
 
 ### Busquedas de Personajes
