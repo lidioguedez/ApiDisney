@@ -2,6 +2,13 @@
 #### Servidor de prueba: **http://149.56.175.197/api/**
 (El servidor es funcional para hacer pruebas pero no envia email)
 
+###Tabla GENEROS con sus IDs
+![tabla_Generos](https://user-images.githubusercontent.com/112365426/190039892-e651609e-6aa5-4d32-b748-983dfebc93ba.jpg)
+
+### Diagrama de la Base de Datos
+![diagrama-ApiDisney](https://user-images.githubusercontent.com/112365426/190039982-060dacd1-3fbd-42fa-861e-acec5a20cd7b.jpg)
+
+
 ### Registrando Un Nuevo Usuario
 
 Para comenzar a usar esta Api se debe deben registrar en el Endpoint:
