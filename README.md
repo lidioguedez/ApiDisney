@@ -1,5 +1,6 @@
 # Simple Api Disney
 #### Servidor de prueba: **http://149.56.175.197/api/**
+(El servidor es funcional para hacer pruebas pero no envia email)
 
 ### Registrando Un Nuevo Usuario
 
