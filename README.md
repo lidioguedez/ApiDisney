@@ -2,7 +2,7 @@
 #### Servidor de prueba: **http://149.56.175.197/api/**
 (El servidor es funcional para hacer pruebas pero no envia email)
 
-###Tabla GENEROS con sus IDs
+### Tabla GENEROS con sus IDs
 ![tabla_Generos](https://user-images.githubusercontent.com/112365426/190039892-e651609e-6aa5-4d32-b748-983dfebc93ba.jpg)
 
 ### Diagrama de la Base de Datos
