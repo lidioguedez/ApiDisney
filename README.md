@@ -27,7 +27,7 @@ Esta llamada responderá con los datos del nuevo usuario más un token que se us
 
 Si ya se esta registrado se pueden recuperar los datos y el Token haciendo una llamada al Endpoint:
 ```php
- curl -X POST -H 'Authorization: Bearer $TOKEN' /api/auth/login
+ curl -X POST  /api/auth/login
 ```
 Cuerpo de la llamada debe tener los siguientes parametros:
 
